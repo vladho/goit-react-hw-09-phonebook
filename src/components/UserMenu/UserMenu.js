@@ -1,10 +1,16 @@
 import React from "react"
-import { connect } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { logOut } from "../../redux/auth/authOperation"
 import { getUserName } from "../../redux/auth/authSelector"
 import styles from "./UserMenu.module.css"
 
-const UserMenu = ({ name, onLogout }) => {
+const UserMenu = () => {
+
+  const name = useSelector(getUserName)
+  const dispatch = useDispatch()
+
+  const onLogout = () => dispatch(logOut())
+
   return (
     <div className={styles.box}>
       <span>{` Welcome, ${name}`}</span>
@@ -15,12 +21,5 @@ const UserMenu = ({ name, onLogout }) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  name: getUserName(state),
-})
 
-const mapDispatchToProps = {
-  onLogout: logOut,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu)
+export default UserMenu

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
-import { useLocation } from "react-router-dom"
+import { useRouteMatch } from "react-router-dom"
 import { register, login } from "../../redux/auth/authOperation"
 import styles from "./AuthForm.module.css"
 
@@ -10,7 +10,7 @@ const AuthForm = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const location = useLocation()
+  const match = useRouteMatch()
   const dispatch = useDispatch()
 
     const onHandleChangeName = (e) => {
@@ -26,13 +26,13 @@ const AuthForm = () => {
 
   const onHandleSubmit = (e) => {
     e.preventDefault()
-    location.pathname.slice(1) === "login"
+    match.url.slice(1) === "login"
       ? dispatch(login( {email, password}))
       :dispatch(register({name, email, password}))
 
   }
 
-  const currentPage = location.pathname.slice(1)
+  const currentPage = match.url.slice(1)
   const isLoginPage = currentPage === "login" ? "Pls, SingIn" : "Pls, SingUp"
   return (
     <>

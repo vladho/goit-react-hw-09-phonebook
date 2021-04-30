@@ -1,41 +1,42 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styles from "./Phonebook.module.css";
 
-class Phonebook extends Component {
-  initialState = {
-    name: "",
-    number: "",
-  };
-  state = {
-    ...this.initialState,
-  };
 
-  handleSubmit = (e) => {
+  const Phonebook =({onSubmit}) =>{
+
+  const [name, setName] = useState("")
+  const [number, setNumber] = useState("")
+
+ const handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
-    this.reset();
+    onSubmit({name,number});
+    reset();
   };
 
-  onInputChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({ [name]: value });
+
+  const onInputChangeName = (e) => {
+setName(e.target.value)
+  }
+   const onInputChangeNumber = (e) => {
+setNumber(e.target.value)
+  }
+
+   const reset = () => {
+    setName("")
+    setNumber("")
   };
 
-  reset = () => {
-    this.setState({ ...this.initialState });
-  };
-  render() {
     return (
       <div className={styles.phonebook}>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <label>
             <p>Name</p>
             <input
               type="text"
-              value={this.state.name}
+              value={name}
               name="name"
               className={styles.inpt}
-              onChange={this.onInputChange}
+              onChange={onInputChangeName}
               // autoComplete="off"
             />
           </label>
@@ -43,10 +44,10 @@ class Phonebook extends Component {
             <p>Number</p>
             <input
               type="text"
-              value={this.state.number}
+              value={number}
               name="number"
               className={styles.inpt}
-              onChange={this.onInputChange}
+              onChange={onInputChangeNumber}
               // autoComplete="off"
             />
           </label>
@@ -56,7 +57,7 @@ class Phonebook extends Component {
         </form>
       </div>
     );
-  }
+  
 }
 
 export default Phonebook;

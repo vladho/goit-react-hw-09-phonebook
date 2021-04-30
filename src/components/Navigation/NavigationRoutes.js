@@ -1,10 +1,14 @@
 import React, { Suspense } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { getIsAuthenticated } from "../../redux/auth/authSelector";
 import { mainRoutes } from "../../routes/mainRoutes";
 
-const NavigationRoutes = ({ isAuth }) => {
+const NavigationRoutes = () => {
+
+  const isAuth = useSelector(getIsAuthenticated)
+
+
   return (
     <Suspense fallback={<h2>loading..</h2>}>
       <Switch>
@@ -24,8 +28,5 @@ const NavigationRoutes = ({ isAuth }) => {
     </Suspense>
   );
 };
-const mapStateToProps = (state) => ({
-  isAuth: getIsAuthenticated(state),
-});
 
-export default connect(mapStateToProps)(NavigationRoutes);
+export default NavigationRoutes

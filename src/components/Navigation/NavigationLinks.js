@@ -1,11 +1,15 @@
 import React from "react"
-import { connect } from "react-redux"
+import { useSelector } from "react-redux"
 import { getIsAuthenticated } from "../../redux/auth/authSelector"
 import { mainRoutes } from "../../routes/mainRoutes"
 import NavigationLinkItem from "./NavigationLinkItem"
 import styles from "./Navigation.module.css"
 
-const NavigationLinks = ({ isAuth }) => {
+const NavigationLinks = () => {
+
+  const isAuth = useSelector(getIsAuthenticated)
+
+
   return (
     <nav>
       <ul className={styles.list}>
@@ -17,8 +21,5 @@ const NavigationLinks = ({ isAuth }) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  isAuth: getIsAuthenticated(state),
-})
 
-export default connect(mapStateToProps)(NavigationLinks)
+export default NavigationLinks
