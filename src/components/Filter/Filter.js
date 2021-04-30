@@ -4,7 +4,7 @@ import { filterContacts } from "../../redux/contacts/contactsActions";
 import { getFilter } from "../../redux/contacts/contactsSelector";
 import styles from "./Filter.module.css";
 
-const Filter = ({  filterContacts }) => {
+const Filter = () => {
 
   const filter = useSelector(getFilter)
 const dispatch = useDispatch()
@@ -31,14 +31,5 @@ const dispatch = useDispatch()
   );
 };
 
-// const mapStateToProps = (state) => ({
-//   filter: getFilter(state),
-// });
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     filterContacts: (name) => dispatch(filterContacts(name)),
-//   };
-// };
 
 export default Filter;

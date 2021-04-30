@@ -4,8 +4,8 @@ import styles from "./Navigation.module.css"
 
 const NavigationLinkItem = ({ path, exact, name, isRestricted, isAuth }) => {
   return (
+    
     <>
-      {/* {((!isAuth && isRestricted) || (isAuth && !isRestricted)) && ( */}
       {!isAuth && isRestricted && (
         <li className={styles.item}>
           <NavLink
