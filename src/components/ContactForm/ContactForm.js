@@ -19,12 +19,10 @@ const items = useSelector(getAllContacts)
 
   useEffect(() => {
     dispatch(getContacts())
-  }, []);
+  }, [dispatch]);
 
 
   const submitForm = (data) => {
-    console.log(data)
-    console.log({data})
     const isOriginal = items.find(
       (item) => item.name.toLowerCase() === data.name.toLowerCase()
     );

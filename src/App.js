@@ -12,7 +12,7 @@ const App = ({ loading }) => {
 
   useEffect(() => {
       dispatch(getCurrentUser());
-      }, []);
+      }, [dispatch]);
 
   return (
     <>
