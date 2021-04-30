@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Contacts from "../Contacts/Contacts";
 import Filter from "../Filter/Filter";
 import Phonebook from "../Phonebook/Phonebook";
@@ -9,22 +9,28 @@ import {
   getContacts,
 } from "../../redux/contacts/contactsOperation";
 import {
-  getAllContacts,
-  getLoading,
+  getAllContacts
 } from "../../redux/contacts/contactsSelector";
 
-const ContactForm = ({ items, addContact, getContacts }) => {
+const ContactForm = () => {
+
+const dispatch = useDispatch()
+const items = useSelector(getAllContacts)
+
   useEffect(() => {
-    getContacts();
-  }, [getContacts]);
+    dispatch(getContacts())
+  }, []);
+
 
   const submitForm = (data) => {
+    console.log(data)
+    console.log({data})
     const isOriginal = items.find(
       (item) => item.name.toLowerCase() === data.name.toLowerCase()
     );
     isOriginal
       ? alert(`${data.name} is already in contacts`)
-      : addContact(data);
+      : dispatch(addContact(data))
   };
   return (
     <>
@@ -39,18 +45,4 @@ const ContactForm = ({ items, addContact, getContacts }) => {
   );
 };
 
-const mapStateToProps = (contacts) => {
-  return {
-    loading: getLoading(contacts),
-    items: getAllContacts(contacts),
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addContact: (name) => dispatch(addContact(name)),
-    getContacts: (contacts) => dispatch(getContacts(contacts)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+export default ContactForm;

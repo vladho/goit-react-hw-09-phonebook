@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ContactsItem from "./ContactsItem/ContactsItem";
-import { connect } from "react-redux";
-import { deleteContact } from "../../redux/contacts/contactsOperation";
+import { useSelector } from "react-redux";
 import { getFilterContacts } from "../../redux/contacts/contactsSelector";
 
-const Contacts = ({ deleteContact, filterContacts }) => {
+const Contacts = () => {
+
+  const filterContacts = useSelector(getFilterContacts)
+
   return (
     <>
       <ul className="contacts__name">
@@ -13,7 +15,6 @@ const Contacts = ({ deleteContact, filterContacts }) => {
           <ContactsItem
             contact={el}
             key={el.id}
-            deleteContact={deleteContact}
           />
         ))}
       </ul>
@@ -21,20 +22,9 @@ const Contacts = ({ deleteContact, filterContacts }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  filterContacts: getFilterContacts(state),
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteContact: (id) => dispatch(deleteContact(id)),
-  };
-};
-
 Contacts.propTypes = {
   items: PropTypes.array,
-  deleteContact: PropTypes.func.isRequired,
   filter: PropTypes.string,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+export default Contacts;

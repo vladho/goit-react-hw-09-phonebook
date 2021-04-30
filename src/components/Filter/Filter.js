@@ -1,12 +1,16 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { filterContacts } from "../../redux/contacts/contactsActions";
 import { getFilter } from "../../redux/contacts/contactsSelector";
 import styles from "./Filter.module.css";
 
-const Filter = ({ filter, filterContacts }) => {
+const Filter = ({  filterContacts }) => {
+
+  const filter = useSelector(getFilter)
+const dispatch = useDispatch()
+
   const SetFilter = (e) => {
-    filterContacts(e.target.value);
+    dispatch(filterContacts(e.target.value));
   };
 
   return (
@@ -27,14 +31,14 @@ const Filter = ({ filter, filterContacts }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  filter: getFilter(state),
-});
+// const mapStateToProps = (state) => ({
+//   filter: getFilter(state),
+// });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    filterContacts: (name) => dispatch(filterContacts(name)),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     filterContacts: (name) => dispatch(filterContacts(name)),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default Filter;
