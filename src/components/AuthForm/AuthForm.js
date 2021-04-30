@@ -1,30 +1,39 @@
-import React, { Component, useState } from "react"
-import { connect } from "react-redux"
-import { withRouter } from "react-router"
+import React, { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useLocation } from "react-router-dom"
 import { register, login } from "../../redux/auth/authOperation"
 import styles from "./AuthForm.module.css"
 
-const AuthForm = (props) => {
+const AuthForm = () => {
+
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const onHandleChange = (e) => {
+  const location = useLocation()
+  const dispatch = useDispatch()
+
+    const onHandleChangeName = (e) => {
     setName(e.target.value)
+  }
+    const onHandleChangeEmail = (e) => {
     setEmail(e.target.value)
+  }
+    const onHandleChangePassword = (e) => {
     setPassword(e.target.value)
   }
 
+
   const onHandleSubmit = (e) => {
-    // e.preventDefault()
-    // props.location.pathname.slice(1) === "login"
-    //   ? props.onLogin(name, email, password)
-    //   : props.onRegister(name, email, password)
-    // this.setState({ ...this.initialState })
+    e.preventDefault()
+    location.pathname.slice(1) === "login"
+      ? dispatch(login( {email, password}))
+      :dispatch(register({name, email, password}))
+
   }
 
-  // const currentPage = props.location.pathname.slice(1)
-  // const isLoginPage = currentPage === "login" ? "Pls, SingIn" : "Pls, SingUp"
+  const currentPage = location.pathname.slice(1)
+  const isLoginPage = currentPage === "login" ? "Pls, SingIn" : "Pls, SingUp"
   return (
     <>
       <h1 className={styles.title}> {isLoginPage}</h1>
@@ -39,7 +48,7 @@ const AuthForm = (props) => {
                 className={styles.inpt}
                 value={name}
                 required
-                onChange={onHandleChange}
+                onChange={onHandleChangeName}
               />
             </label>
           )}
@@ -51,7 +60,7 @@ const AuthForm = (props) => {
               className={styles.inpt}
               value={email}
               required
-              onChange={onHandleChange}
+              onChange={onHandleChangeEmail}
             />
           </label>
           <label>
@@ -62,7 +71,7 @@ const AuthForm = (props) => {
               className={styles.inpt}
               value={password}
               required
-              onChange={onHandleChange}
+              onChange={onHandleChangePassword}
             />
           </label>
 
@@ -76,170 +85,3 @@ const AuthForm = (props) => {
 }
 
 export default AuthForm
-// class AuthForm extends Component {
-//   initialState = {
-//     name: "",
-//     email: "",
-//     password: "",
-//   }
-//   state = {
-//     ...this.initialState,
-//   }
-
-//   onHandleChange = (e) => {
-//     this.setState({ [e.target.name]: e.target.value })
-//   }
-//   onHandleSubmit = (e) => {
-//     e.preventDefault()
-//     this.props.location.pathname.slice(1) === "login"
-//       ? this.props.onLogin(this.state)
-//       : this.props.onRegister(this.state)
-//     this.setState({ ...this.initialState })
-//   }
-//   render() {
-//     const currentPage = this.props.location.pathname.slice(1)
-//     const isLoginPage = currentPage === "login" ? "Pls, SingIn" : "Pls, SingUp"
-
-//     return (
-//       <>
-//         <h1 className={styles.title}> {isLoginPage}</h1>
-//         <div className={styles.authform}>
-//           <form onSubmit={this.onHandleSubmit}>
-//             {currentPage === "register" && (
-//               <label>
-//                 <p>Name</p>
-//                 <input
-//                   type="name"
-//                   name="name"
-//                   className={styles.inpt}
-//                   value={this.state.name}
-//                   required
-//                   onChange={this.onHandleChange}
-//                 />
-//               </label>
-//             )}
-//             <label>
-//               <p>Email</p>
-//               <input
-//                 type="email"
-//                 name="email"
-//                 className={styles.inpt}
-//                 value={this.state.email}
-//                 required
-//                 onChange={this.onHandleChange}
-//               />
-//             </label>
-//             <label>
-//               <p>Password</p>
-//               <input
-//                 type="password"
-//                 name="password"
-//                 className={styles.inpt}
-//                 value={this.state.password}
-//                 required
-//                 onChange={this.onHandleChange}
-//               />
-//             </label>
-
-//             <button type="submit" className={styles.btn}>
-//               {currentPage}
-//             </button>
-//           </form>
-//         </div>
-//       </>
-//     )
-//   }
-// }
-
-// const mapDispatchToProps = {
-//   onRegister: register,
-//   onLogin: login,
-// }
-// export default connect(null, mapDispatchToProps)(withRouter(AuthForm))
-
-// import React, { Component } from "react"
-// import { connect } from "react-redux"
-// import { withRouter } from "react-router"
-// import { register, login } from "../../redux/auth/authOperation"
-// import styles from "./AuthForm.module.css"
-
-// class AuthForm extends Component {
-//   initialState = {
-//     name: "",
-//     email: "",
-//     password: "",
-//   }
-//   state = {
-//     ...this.initialState,
-//   }
-
-//   onHandleChange = (e) => {
-//     this.setState({ [e.target.name]: e.target.value })
-//   }
-//   onHandleSubmit = (e) => {
-//     e.preventDefault()
-//     this.props.location.pathname.slice(1) === "login"
-//       ? this.props.onLogin(this.state)
-//       : this.props.onRegister(this.state)
-//     this.setState({ ...this.initialState })
-//   }
-//   render() {
-//     const currentPage = this.props.location.pathname.slice(1)
-//     const isLoginPage = currentPage === "login" ? "Pls, SingIn" : "Pls, SingUp"
-
-//     return (
-//       <>
-//         <h1 className={styles.title}> {isLoginPage}</h1>
-//         <div className={styles.authform}>
-//           <form onSubmit={this.onHandleSubmit}>
-//             {currentPage === "register" && (
-//               <label>
-//                 <p>Name</p>
-//                 <input
-//                   type="name"
-//                   name="name"
-//                   className={styles.inpt}
-//                   value={this.state.name}
-//                   required
-//                   onChange={this.onHandleChange}
-//                 />
-//               </label>
-//             )}
-//             <label>
-//               <p>Email</p>
-//               <input
-//                 type="email"
-//                 name="email"
-//                 className={styles.inpt}
-//                 value={this.state.email}
-//                 required
-//                 onChange={this.onHandleChange}
-//               />
-//             </label>
-//             <label>
-//               <p>Password</p>
-//               <input
-//                 type="password"
-//                 name="password"
-//                 className={styles.inpt}
-//                 value={this.state.password}
-//                 required
-//                 onChange={this.onHandleChange}
-//               />
-//             </label>
-
-//             <button type="submit" className={styles.btn}>
-//               {currentPage}
-//             </button>
-//           </form>
-//         </div>
-//       </>
-//     )
-//   }
-// }
-
-// const mapDispatchToProps = {
-//   onRegister: register,
-//   onLogin: login,
-// }
-// export default connect(null, mapDispatchToProps)(withRouter(AuthForm))
